@@ -1,6 +1,7 @@
 package com.mysite.sbb2.question;
 
 import com.mysite.sbb2.answer.Answer;
+import com.mysite.sbb2.user.SiteUser;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,4 +26,6 @@ public class Question {
     private LocalDateTime createDate;
     @OneToMany(mappedBy = "question", cascade =CascadeType.REMOVE)
     private List<Answer> answerList;
+    @ManyToOne
+    private SiteUser author;
 }
