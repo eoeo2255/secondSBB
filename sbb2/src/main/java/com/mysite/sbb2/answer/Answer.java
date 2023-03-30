@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDateTime;
+import java.util.Set;
+
 @Getter
 @Setter
 @Entity
@@ -22,4 +24,7 @@ public class Answer {
     private SiteUser author;
 
     private LocalDateTime modifyDate;
+    @ManyToMany
+    private Set<SiteUser> voter;
+
 }

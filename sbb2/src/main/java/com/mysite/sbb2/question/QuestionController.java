@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,7 +22,6 @@ import java.security.Principal;
 @RequestMapping("/question")
 @Controller
 public class QuestionController {
-
     private final QuestionService questionService;
     private final UserService userService;
 
@@ -89,6 +89,15 @@ public class QuestionController {
         }
         this.questionService.delete(q);
         return "redirect:/";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/vote/{id}")
+    private String vote(Principal principal, @PathVariable("id") Integer id) {
+        Question q = this.questionService.getQ(id);
+        SiteUser user = this.userService.getUser(principal.getName());
+        this.questionService.vote(q, user);
+        return String.format("redirect:/question/detail/%s", id);
     }
 
 }
