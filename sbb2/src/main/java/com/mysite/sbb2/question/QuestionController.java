@@ -93,7 +93,7 @@ public class QuestionController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/vote/{id}")
-    private String vote(Principal principal, @PathVariable("id") Integer id) {
+    public String vote(Principal principal, @PathVariable("id") Integer id) {
         Question q = this.questionService.getQ(id);
         SiteUser user = this.userService.getUser(principal.getName());
         this.questionService.vote(q, user);
